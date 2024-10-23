@@ -1,0 +1,39 @@
+name: test code quantity on test brach
+on: 
+  push:
+    branches:
+      - test
+env: 
+  version: 1.0.0
+jobs: 
+  test:
+    name: test on test branch for code quantity
+    run_on: runner_on_habor
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: test
+      - name: run test
+        run: mvn test
+      - name: built app
+        run: mvn packege
+      - name: run app
+        run: nohup java -jar target/demo-$version.jar > output.log 2>&1 &
+      - name: test request
+        run: curl http://localhost:8080 -I | head -1 | grep 200
+  
+  package:
+    needs: test
+    name: package app file to container image
+    run_on: runner_on_habor
+    steps:
+      - name: build 
+        run: sudo docker built -t demoapp:$version .
+      - name: tag
+        run: sudo docker tag demoapp:$version harbor.mydomain.com/demoapp:$version
+      - name: login in harbor
+        run: sundo docker login -u admin -p Harbor12345 harbor.mydomain.com
+      - name: push to harbor
+        run: sudo docker push harbor.mydomain.com/demoapp:$version
+      - name: run app
+        run: sudo docker rm -f webapp ; sudo docker run --name webapp_java harbor.mydomain.com/demoapp:$version
