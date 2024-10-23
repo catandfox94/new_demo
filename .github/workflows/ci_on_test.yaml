@@ -34,6 +34,7 @@ jobs:
 
   run_app_on_test:
     runs-on: runner_on_habor
+    needs: ci_on_test
     env:
       VERSION: 1.0.0
     steps:
