@@ -4,6 +4,6 @@ FROM openjdk:17-jdk-slim-
 
 ADD target/demo-1.0.0.jar   /app/demo.jar
 
-EXPOSE 8000
+EXPOSE 8080
 
 ENTRYPOINT ["java", "-jar", "/app/demo.jar" ]
