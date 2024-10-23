@@ -42,7 +42,7 @@ jobs:
         run: sudo docker build -t demo-app:$VERSION . 
      
       - name: run app on docker 
-        run: sudo docker rm -f webapp ; sudo docker run --name webapp -p 8080:8080 demo-app:$VERSION
+        run: sudo docker rm -f webapp ; sudo docker run --name webapp -p 8080:8080 -d demo-app:$VERSION
 
       - name: remove test container
         run: sudo docker rm -f webapp
