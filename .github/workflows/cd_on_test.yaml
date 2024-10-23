@@ -1,9 +1,9 @@
 name: build and deploy on production
 on: 
   pull_request:
-    types: [closed]
-  branches: 
-    - main
+    types: closed
+    branches: 
+      - main
 env:
   VERSION: main-1.0.0
 jobs:
