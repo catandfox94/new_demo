@@ -10,7 +10,7 @@ defaults:
     shell: bash
 jobs:
   ci_on_test:
-    run_on: runner_on_habor
+    runs_on: runner_on_habor
     steps:
       - name: checkut on test branch
         uses: actions/checkout@v4
@@ -33,7 +33,7 @@ jobs:
         run: mvn clean package
 
   run_app_on_test:
-    run_on: runner_on_habor
+    runs_on: runner_on_habor
     env:
       VERSION: 1.0.0
     steps:
