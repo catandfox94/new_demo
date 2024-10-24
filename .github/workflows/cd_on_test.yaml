@@ -41,7 +41,9 @@ jobs:
 
       - name: create or update resources on K8S
         run: kubectl apply -f deploy/demo-app.yml
-
+      
+      - name: make container image is the latest version
+        run: kubectl set image deployments/demo-app *=harbor.mydomain.com/myproject/demo-app:main-1.0.0
 
 
 
