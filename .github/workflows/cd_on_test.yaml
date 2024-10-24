@@ -15,6 +15,9 @@ jobs:
         with:
           ref: main
 
+      - name: package app
+        run: mvn clean package
+
       - name: build image
         run: docker build -t demo-app:$VERSION .
 
@@ -29,7 +32,13 @@ jobs:
 
   production:
     runs-on: production
+    needs: build
     steps:
+      - name: checkout on main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
       - name: create or update resources on K8S
         run: kubectl apply -f deploy/demo-app.yml
 
